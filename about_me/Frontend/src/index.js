@@ -6,10 +6,17 @@ import About from './About';
 import Education from './Education';
 import Experience from './Experience';
 import Home from './Home';
+import BGimage from './images/BACKGROUND.jpg';
 
 const Resume = () => {
   return (
-    <div style={{ backgroundColor: '#2D2D2D', color: 'white', minHeight: '100vh' }}>
+    <div style={{ 
+      backgroundImage: `url(${BGimage})`, 
+      backgroundSize: 'cover', 
+      backgroundRepeat: 'no-repeat', 
+      color: 'white', 
+      minHeight: '100vh' 
+  }}>
       <Router>
         <Navbar />
         <div id="home">

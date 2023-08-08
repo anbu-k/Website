@@ -5,7 +5,7 @@ import React from 'react';
 
 const Navbar = () => {
   return (
-    <BootstrapNavbar bg="dark" expand="lg">
+    <BootstrapNavbar style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }} expand="lg">
       <div style={{ padding: '20px' }}>
       <BootstrapNavbar.Brand href="#home" style={{ color: 'white' }}>
         Anbu Krishnan</BootstrapNavbar.Brand>
@@ -15,7 +15,7 @@ const Navbar = () => {
         <Nav className="mr-auto">
           <Nav.Link as={Link} smooth to="#about" style={{ color: 'white' }}>About</Nav.Link>
           <Nav.Link as={Link} smooth to="#education" style={{ color: 'white' }}>Education</Nav.Link>
-          <Nav.Link as={Link} smooth to="#experience" style={{ color: 'white' }}>Experience</Nav.Link>
+          <Nav.Link as={Link} smooth to="#experience" style={{ color: 'white' }}>Projects</Nav.Link>
         </Nav>
       </BootstrapNavbar.Collapse>
     </BootstrapNavbar>
