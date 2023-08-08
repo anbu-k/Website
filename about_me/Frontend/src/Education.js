@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Container, Card } from "react-bootstrap";
 
+
 const Education = () => {
   const [isExpanded, setIsExpanded] = useState(true);
+
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
+
 
   return (
     <Container style={{ padding: "20px" }}>
@@ -28,6 +31,7 @@ const Education = () => {
           </Card.Title>
         </Card.Body>
 
+
         {/* Conditional Rendering */}
         {isExpanded && (
           <>
@@ -39,6 +43,7 @@ const Education = () => {
               <Card.Text style={{ color: "white" }}>2016-2020</Card.Text>
             </Card.Body>
 
+
             {/* College Card */}
             <Card.Body style={{ borderTop: "1px solid white" }}>
               <Card.Title style={{ color: "white" }}>
@@ -46,6 +51,7 @@ const Education = () => {
               </Card.Title>
               <Card.Text style={{ color: "white" }}>2020-2024</Card.Text>
             </Card.Body>
+
 
             {/* Skills Card */}
             <Card.Body style={{ borderTop: "1px solid white" }}>
@@ -60,5 +66,6 @@ const Education = () => {
     </Container>
   );
 };
+
 
 export default Education;
