@@ -2,8 +2,11 @@ import React from "react";
 import { Nav, Navbar as BootstrapNavbar } from "react-bootstrap";
 import { HashLink as Link } from "react-router-hash-link";
 
-
 const Navbar = () => {
+  const handleBrandClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <BootstrapNavbar
       style={{
@@ -16,7 +19,7 @@ const Navbar = () => {
       expand="lg"
     >
       <div style={{ padding: "20px" }}>
-        <BootstrapNavbar.Brand href="#home" style={{ color: "white" }}>
+        <BootstrapNavbar.Brand onClick={handleBrandClick} style={{ color: "white", cursor: "pointer" }}>
           Anbu Krishnan
         </BootstrapNavbar.Brand>
       </div>
@@ -37,6 +40,5 @@ const Navbar = () => {
     </BootstrapNavbar>
   );
 };
-
 
 export default Navbar;

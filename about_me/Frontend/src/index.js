@@ -7,6 +7,7 @@ import Education from './Education';
 import Experience from './Projects';
 import Home from './Home';
 import BGimage from './images/BACKGROUND.jpg';
+import Projects from './Projects';
 
 
 const Resume = () => {
@@ -29,8 +30,8 @@ const Resume = () => {
         <div id="education">
           <Education />
         </div>
-        <div id="Projects">
-          <Experience />
+        <div id="projects">
+          <Projects />
         </div>
       </Router>
     </div>
