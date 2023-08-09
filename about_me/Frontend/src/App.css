@@ -1,0 +1,51 @@
+.cardContainer {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .hoverIndicator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%; /* half the container width */
+    z-index: 2;
+    opacity: 0;
+  }
+  
+  .hoverIndicator:hover + .glowingCard {
+    transform: rotateY(10deg); /* Default rotation if right side is hovered first */
+  }
+  
+  /* If left side is hovered first, apply a different rotation */
+  .hoverIndicator:hover + .hoverIndicator + .glowingCard {
+    transform: rotateY(-10deg); 
+  }
+  
+  .glowingCard {
+    transition: transform 0.3s, box-shadow 0.5s;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px #0000003b;
+  }
+  
+  .glowingCard:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22), 0 0 0 6px rgba(255, 255, 255, 0.8);
+  }
+  
+  .navbar-custom {
+    background-color: rgba(60, 11, 105, 0.384);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.9s;
+  }
+  
+  .nav-link-custom {
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s;  /* Smooth transition */
+  }
+  
+  .nav-link-custom:hover {
+    color: rgb(0, 255, 255);  /* Color when hovered over */
+  }
+  
+  
