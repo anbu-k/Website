@@ -31,7 +31,7 @@
   }
   
   .navbar-custom {
-    background-color: rgba(60, 11, 105, 0.384);
+    background-color: rgba(0, 0, 0, 0.384);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -47,5 +47,16 @@
   .nav-link-custom:hover {
     color: rgb(0, 255, 255);  /* Color when hovered over */
   }
+
+  .icon-hover {
+    transition: transform 0.3s, color 0.3s;
+  }
+  
+  .icon-hover:hover {
+    transform: scale(1.2);
+    color: gold; /* or any other color you'd like */
+  }
+  
+  
   
   

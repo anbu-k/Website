@@ -108,6 +108,7 @@ const About = () => (
                     href="https://www.linkedin.com/in/anbu-krishnan-312789227"
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="icon-hover"
                   >
                     <LinkedInIcon
                       style={{ color: "white", marginBottom: "10px" }}
@@ -117,6 +118,7 @@ const About = () => (
                     href="https://github.com/anbu-k"
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="icon-hover"
                   >
                     <GitHubIcon style={{ color: "white" }} />
                   </a>

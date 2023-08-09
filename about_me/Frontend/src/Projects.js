@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.css";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import cyrateImage from "./images/cyrate.jpg";
 
@@ -96,6 +97,7 @@ const Projects = () => (
             href="https://www.youtube.com/watch?v=w_3M2IuUfWA&list=PL6BdlkdKLEB_pYmF7uwubfK99t4KT4Xoe&index=9"
             target="_blank"
             rel="noopener noreferrer"
+            className = "icon-hover"
             style={{
               position: 'absolute',
               bottom: '10px',
