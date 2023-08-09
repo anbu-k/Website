@@ -18,7 +18,7 @@ const Education = () => {
         className="text-center"
         style={{
           backgroundColor: "rgba(255, 255, 255, 0.1)",
-          borderColor: "white",
+          borderColor: "none",
         }}
       >
         {/* Title with Dropdown Arrow */}
