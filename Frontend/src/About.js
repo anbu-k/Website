@@ -14,8 +14,8 @@ const About = () => (
           <Card style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', borderColor: 'white' }}>
             <Card.Img variant="top" src={anbuAImage} alt="Anbu Ai" />
             <Card.Body>
-              <Card.Title style={{ color: 'white', textAlign: 'center' }}>Anbu Krishnan</Card.Title>
-              <Card.Text style={{ color: 'white', textAlign: 'center' }}>Computer Science</Card.Text>
+              <Card.Title style={{ color: 'white', textAlign: 'center', fontSize: '1.5rem' }}>Anbu Krishnan</Card.Title>
+              <Card.Text style={{ color: 'white', textAlign: 'center', fontSize: '1.2rem' }}>Computer Science</Card.Text>
 
               <Row style={{ alignItems: 'center' }}>
                 <Col xs={5} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
