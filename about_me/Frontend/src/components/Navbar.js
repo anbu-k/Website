@@ -1,6 +1,6 @@
 import React from "react";
 import { Nav, Navbar as BootstrapNavbar } from "react-bootstrap";
-import "./App.css";
+import "../App.css";
 
 const Navbar = () => {
   const handleBrandClick = () => {
@@ -46,6 +46,12 @@ const Navbar = () => {
             className="nav-link-custom"
           >
             Projects
+          </Nav.Link>
+          <Nav.Link
+            onClick={() => handleNavLinkClick("contact")}
+            className="nav-link-custom"
+          >
+            Contact Me
           </Nav.Link>
         </Nav>
       </BootstrapNavbar.Collapse>

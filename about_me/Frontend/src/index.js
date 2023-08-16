@@ -1,24 +1,27 @@
-import { BrowserRouter as Router } from 'react-router-dom';
-import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from './Navbar';
-import About from './About';
-import Education from './Education';
-import Experience from './Projects';
-import Home from './Home';
-import BGimage from './images/BACKGROUND.jpg';
-import Projects from './Projects';
-
+import { BrowserRouter as Router } from "react-router-dom";
+import ReactDOM from "react-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Navbar from "./components/Navbar";
+import About from "./components/About";
+import Education from "./components/Education";
+import Home from "./components/Home";
+import BGimage from "./images/BACKGROUND.jpg";
+import Projects from "./components/Projects";
+import Contact from "./components/Contact";
+import './App.css'
+import { Component } from "react";
 
 const Resume = () => {
   return (
-    <div style={{
-      backgroundImage: `url(${BGimage})`,
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-      color: 'white',
-      minHeight: '100vh'
-  }}>
+    <div
+      style={{
+        backgroundImage: `url(${BGimage})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        color: "white",
+        minHeight: "110vh",
+      }}
+    >
       <Router>
         <Navbar />
         <div id="home">
@@ -33,10 +36,12 @@ const Resume = () => {
         <div id="projects">
           <Projects />
         </div>
+        <div id="contact">
+          <Contact />
+        </div>
       </Router>
     </div>
   );
-}
+};
 
-
-ReactDOM.render(<Resume />, document.getElementById('root'));
+ReactDOM.render(<Resume />, document.getElementById("root"));

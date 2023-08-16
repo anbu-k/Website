@@ -12,7 +12,7 @@ const Education = () => {
 
 
   return (
-    <Container style={{ padding: "20px" }}>
+    <Container style={{ padding: "50px" }}>
       {/* Main Card Block */}
       <Card
         className="text-center"

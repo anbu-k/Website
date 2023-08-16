@@ -1,6 +1,6 @@
 import React from "react";
-import "./App.css";
-import anbuAImage from "./images/AnbuAI.jpg";
+import "../App.css";
+import anbuAImage from "../images/AnbuAI.jpg";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";

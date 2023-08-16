@@ -1,12 +1,13 @@
 import React from "react";
-import "./App.css";
+import "../App.css";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import cyrateImage from "./images/cyrate.jpg";
+import cyrateImage from "../images/cyrate3.jpg";
+import adkImage from "../images/ADKlogo.jpg";
 
 import { Card, Row, Col } from "react-bootstrap";
 
 const Projects = () => (
-  <div style={{ padding: "20px" }}>
+  <div style={{ padding: "80px" }}>
     <Card
       className="text-center"
       style={{
@@ -26,7 +27,7 @@ const Projects = () => (
 
     <Row className="justify-content-center">
       {/* First Project */}
-      <Col md={6}>
+      <Col md={4}>
         <Card
           className="text-center"
           style={{
@@ -93,24 +94,24 @@ const Projects = () => (
           </Card.Body>
 
           {/* YouTube Icon with link */}
-          <a 
+          <a
             href="https://www.youtube.com/watch?v=w_3M2IuUfWA&list=PL6BdlkdKLEB_pYmF7uwubfK99t4KT4Xoe&index=9"
             target="_blank"
             rel="noopener noreferrer"
-            className = "icon-hover"
+            className="icon-hover"
             style={{
-              position: 'absolute',
-              bottom: '10px',
-              right: '10px',
+              position: "absolute",
+              bottom: "10px",
+              right: "10px",
             }}
           >
-            <YouTubeIcon style={{ color: 'red', fontSize: 30 }} />
+            <YouTubeIcon style={{ color: "red", fontSize: 30 }} />
           </a>
         </Card>
       </Col>
 
       {/* Second Project */}
-      <Col md={6}>
+      <Col md={4}>
         <Card
           className="text-center"
           style={{
@@ -125,11 +126,43 @@ const Projects = () => (
             </Card.Title>
             <Card.Img
               variant="top"
-              src="path_to_adk_movies_image.jpg"
+              src={adkImage}
               alt="ADK Movies Project"
+              style={{ maxWidth: "300px", margin: "0 auto" }}
             />
             <Card.Text style={{ color: "white", marginTop: "15px" }}>
-              Description of ADK Movies goes here...
+              <strong> Movie Catalog Management System</strong>
+              <br />
+              Manage your movie collection with ADK Movies' robust features:
+              <br />
+              <br />
+              • Browse movies in the catalog.
+              <br />
+              • Add new movies to the collection.
+              <br />
+              • Update existing movie details.
+              <br />
+              <br />
+              <strong>Frontend Brilliance:</strong>
+              <br />
+              • Developed using React.
+              <br />
+              • Multiple components for diverse pages and forms.
+              <br />
+              <br />
+              <strong>Powerful Backend:</strong>
+              <br />
+              • Built with Node.js, Express, and MongoDB.
+              <br />
+              • Handles frontend requests and data processing.
+              <br />
+              <br />
+              <strong>Responsive Design:</strong>
+              <br />
+              • Offers a simple and intuitive user experience.
+              <br />
+              • Easily manage and engage with your movie catalog.
+              <br />
             </Card.Text>
           </Card.Body>
         </Card>
