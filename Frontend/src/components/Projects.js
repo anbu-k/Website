@@ -53,7 +53,7 @@ const Projects = () => {
           <br />
           <strong>Command & Control:</strong>
           <br />
-          • Full CRUD capabilities for a tailored experience.
+          • Full CRUD capabilities for a professional experience.
           <br />
         `,
       },
