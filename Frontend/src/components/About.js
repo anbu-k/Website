@@ -7,14 +7,13 @@ import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
-
-
 const About = () => (
   <div style={{ padding: "20px" }}>
     <Container>
       <Row className="justify-content-center">
         <Col xs={12} sm={6} md={4}>
-          <Card className="glowingCard"
+          <Card
+            className="glowingCard"
             style={{
               backgroundColor: "rgba(255, 255, 255, 0.1)",
               border: "none",
@@ -76,7 +75,12 @@ const About = () => (
                     <MailOutlineIcon
                       style={{ color: "white", marginRight: "10px" }}
                     />
-                    anbukrishnan52@gmail.com
+                    <a
+                      href="mailto:anbukrishnan52@gmail.com"
+                      style={{ color: "white", textDecoration: "none" }}
+                    >
+                      anbukrishnan52@gmail.com
+                    </a>
                   </div>
                 </Col>
                 <Col

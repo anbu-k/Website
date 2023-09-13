@@ -1,7 +1,18 @@
 import React, { useState } from "react";
 import { Container, Card, Badge } from "react-bootstrap";
+import '../App.css'; // Import the CSS file
 
-//anbu
+const SkillBadge = ({ children, className }) => {
+  return (
+    <Badge
+      pill
+      className={`me-2 skill-badge ${className}`} // Use className prop to apply different styles
+    >
+      {children}
+    </Badge>
+  );
+};
+
 const Education = () => {
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -52,30 +63,14 @@ const Education = () => {
             <Card.Body style={{ borderTop: "1px solid white" }}>
               <Card.Title style={{ color: "white" }}>Technical Skills</Card.Title>
               <Card.Text style={{ color: "white" }}>
-                <Badge pill bg="secondary" className="me-2">
-                  Java
-                </Badge>
-                <Badge pill bg="secondary" className="me-2">
-                  C
-                </Badge>
-                <Badge pill bg="secondary" className="me-2">
-                Python
-                </Badge>
-                <Badge pill bg="secondary" className="me-2">
-                  Javascript/ReactJS/NodeJs
-                </Badge>
-                <Badge pill bg="secondary" className="me-2">
-                  HTML/CSS
-                </Badge>
-                <Badge pill bg="secondary" className="me-2">
-                  Spring Boot
-                </Badge>
-                <Badge pill bg="secondary" className="me-2">
-                  MySQL
-                </Badge>
-                <Badge pill bg="secondary" className="me-2">
-                  MongoDB
-                </Badge>
+                <SkillBadge className="java-badge">Java</SkillBadge>
+                <SkillBadge className="c-badge">C</SkillBadge>
+                <SkillBadge className="python-badge">Python</SkillBadge>
+                <SkillBadge className="js-badge">Javascript/ReactJS/NodeJs</SkillBadge>
+                <SkillBadge className="html-badge">HTML/CSS</SkillBadge>
+                <SkillBadge className="spring-badge">Spring Boot</SkillBadge>
+                <SkillBadge className="mysql-badge">MySQL</SkillBadge>
+                <SkillBadge className="mongo-badge">MongoDB</SkillBadge>
               </Card.Text>
             </Card.Body>
           </>

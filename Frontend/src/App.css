@@ -99,8 +99,12 @@
 }
 
 .fading {
-  transition: opacity 0.5s;
+  transition: opacity 0.5s ease-in-out;
   opacity: 0;
+}
+
+.card-content {
+  transition: height 0.5s ease-in-out;
 }
 
 .card {
@@ -110,6 +114,47 @@
 
 .fading:hover {
   opacity: 0;
+}
+
+.java-badge {
+  background-color: #F94144 !important;
+}
+
+.c-badge {
+  background-color: #F3722C !important;
+}
+
+.python-badge {
+  background-color: #F8961E !important;
+}
+
+.js-badge {
+  background-color: #F9844A !important;
+}
+
+.html-badge {
+  background-color: #F9C74F !important;
+}
+
+.spring-badge {
+  background-color: #90BE6D !important;
+}
+
+.mysql-badge {
+  background-color: #43AA8B !important;
+}
+
+.mongo-badge {
+  background-color: #577590 !important;
+}
+
+.skill-badge {
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.skill-badge:hover {
+  transform: scale(1.1);
 }
 
   
