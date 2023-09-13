@@ -7,9 +7,9 @@ import Education from "./components/Education";
 import Home from "./components/Home";
 import BGimage from "./images/BACKGROUND.jpg";
 import Projects from "./components/Projects";
-import Contact from "./components/Contact";
+//import Contact from "./components/Contact";
 import './App.css'
-import { Component } from "react";
+//import { Component } from "react";
 
 const Resume = () => {
   return (
