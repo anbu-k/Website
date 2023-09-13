@@ -47,7 +47,7 @@ const About = () => (
                   fontSize: "1.2rem",
                 }}
               >
-                Computer Science
+                Computer Science Student
               </Card.Text>
 
               <Row style={{ alignItems: "center" }}>
