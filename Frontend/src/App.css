@@ -54,9 +54,63 @@
   
   .icon-hover:hover {
     transform: scale(1.2);
-    color: gold; /* or any other color you'd like */
+    color: gold; 
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
   }
   
-  
+  .project-enter {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  .project-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
+  }
+  .project-exit {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .project-exit-active {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 300ms, transform 300ms;
+  }
+  .arrow {
+  cursor: pointer;
+  font-size: 2em;
+  position: absolute;
+  top: 50%;
+  color: white; /* White arrow icons */
+  transition: transform 0.3s; /* Smooth hover effect */
+}
+.arrow:hover {
+  transform: translateY(-50%) scale(1.2); /* Scale arrow icons on hover */
+}
+.arrow-left {
+  left: 10px;
+}
+.arrow-right {
+  right: 10px;
+}
+
+.fading {
+  transition: opacity 0.5s;
+  opacity: 0;
+}
+
+.card {
+  transition: opacity 0.5s;
+  opacity: 1;
+}
+
+.fading:hover {
+  opacity: 0;
+}
+
   
   
