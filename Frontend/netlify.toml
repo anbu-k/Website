@@ -2,4 +2,4 @@
   base = "Frontend/"
   command = "npm run build"
   publish = "Frontend/build/"
-  functions = "netlify/functions"
+  functions = "../netlify/functions"
