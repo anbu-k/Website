@@ -21,7 +21,7 @@ const About = () => (
               // transition: "transform 0.3s, box-shadow 0.5s", // Increased transition time for the box-shadow for a smoother glow effect
               // boxShadow:
               //   "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23), 0 0 0 4px rgba(255, 255, 255, 0.6)", // Increased the glow's alpha value
-              // transformStyle: "preserve-3d",
+              // transformStyle: "preserve-3d", might use 
               "&:hover": {
                 transform: "rotateX(10deg) rotateY(10deg)",
                 boxShadow:
