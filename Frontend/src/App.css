@@ -388,7 +388,6 @@ body::-webkit-scrollbar {
   height: 420px;
   transform-style: preserve-3d;
   will-change: transform;
-  backface-visibility: hidden;
   left: 50%;
   top: 50%;
   margin-left: -160px;
@@ -405,7 +404,6 @@ body::-webkit-scrollbar {
   height: 100%;
   position: relative;
   background: linear-gradient(135deg, rgba(15, 15, 25, 0.96), rgba(8, 8, 18, 0.98));
-  backdrop-filter: blur(4px);
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   overflow: hidden;
@@ -439,10 +437,8 @@ body::-webkit-scrollbar {
   pointer-events: none;
   border-radius: 14px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  image-rendering: auto;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transform: translateZ(0);
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 /* Navigation Controls */
@@ -1342,9 +1338,6 @@ body::-webkit-scrollbar {
     transition: all 0.5s ease !important;
   }
 
-  .carousel-3d-card-inner {
-    backdrop-filter: blur(8px);
-  }
 
   .carousel-3d-button {
     width: 48px;

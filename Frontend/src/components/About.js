@@ -142,12 +142,12 @@ const About = () => {
       // Center card - straight on, larger, forward
       rotateY = 0;
       translateZ = 100;
-      scale = 1.1;
+      scale = 1;
     } else {
       // Side cards - angle toward center
       rotateY = offset > 0 ? -55 : 55;
       translateZ = -50 - Math.abs(offset) * 30;
-      scale = 0.8;
+      scale = 0.85;
     }
     
     // Opacity based on distance from center
