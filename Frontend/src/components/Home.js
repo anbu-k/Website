@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import "../App.css";
 
 const Home = () => {
   const fullMsg = "Welcome to my website";
@@ -6,7 +8,6 @@ const Home = () => {
   const [index, setIndex] = useState(0);
   const [isCursorVisible, setCursorVisible] = useState(true);
   const [typingComplete, setTypingComplete] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const baseTypeInterval = 50;
@@ -43,24 +44,27 @@ const Home = () => {
   };
 
   return (
-    <div
-      style={{ padding: "20px", textAlign: "center", cursor: "pointer" }}
+    <motion.div
+      className="home-container"
       onClick={handleClick}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <h1 style={{ fontFamily: "monospace", letterSpacing: "3px", textTransform: "" }}>
-        <span
-          style={{ 
-            color: isHovered ? "cyan" : "white", 
-            textShadow: '0 0 5px rgba(0, 255, 255, 0.9)', // Add a glow effect 
-          }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          {message}
-        </span>
-        <span style={{ opacity: isCursorVisible ? 1 : 0 }}>_</span>
-      </h1>
-    </div>
+      <div className="home-content">
+        <h1 className="home-title">
+          <span className="home-text">
+            {message}
+          </span>
+          <motion.span 
+            className="home-cursor"
+            animate={{ opacity: isCursorVisible ? 1 : 0 }}
+          >
+            _
+          </motion.span>
+        </h1>
+      </div>
+    </motion.div>
   );
 };
 
