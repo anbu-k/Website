@@ -8,12 +8,6 @@ import '../App.css';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  const socialLinks = [
-    { icon: <LinkedInIcon />, url: 'https://www.linkedin.com/in/anbu-krishnan', label: 'LinkedIn' },
-    { icon: <GitHubIcon />, url: 'https://github.com/anbu-k', label: 'GitHub' },
-    { icon: <MailOutlineIcon />, url: 'mailto:anbukrishnan52@gmail.com', label: 'Email' }
-  ];
-
   return (
     <footer className="footer-section">
       <Container>
