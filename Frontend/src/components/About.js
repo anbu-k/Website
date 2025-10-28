@@ -14,6 +14,7 @@ import ferryImage from "../images/ferry.JPG";
 import minnyImage from "../images/minny.jpeg";
 import spiritImage from "../images/spirit.jpg";
 import yosemiteImage from "../images/yosemite.JPG";
+import friendsImage from "../images/friends.JPG";
 import "../App.css";
 
 const About = () => {
@@ -72,7 +73,8 @@ const About = () => {
     { src: ferryImage},
     { src: minnyImage},
     { src: spiritImage},
-    { src: yosemiteImage}
+    { src: yosemiteImage},
+    {src: friendsImage}
   ];
 
   const contactInfo = [

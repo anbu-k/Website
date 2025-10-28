@@ -45,12 +45,13 @@ const Education = () => {
   const skills = [
     { name: "Java", className: "java-badge", level: "Advanced" },
     { name: "C", className: "c-badge", level: "Intermediate" },
+    { name: "C++", className: "spring-badge", level: "Intermediate" },
+    { name: "C#", className: "js-badge", level: "Advanced" },
     { name: "Python", className: "python-badge", level: "Advanced" },
-    { name: "Javascript/ReactJS/NodeJs", className: "js-badge", level: "Advanced" },
+    { name: "Typescript", className: "js-badge", level: "Advanced" },
+    { name: "ReactJS", className: "js-badge", level: "Advanced" },
     { name: "HTML/CSS", className: "html-badge", level: "Advanced" },
-    { name: "Spring Boot", className: "spring-badge", level: "Intermediate" },
     { name: "MySQL", className: "mysql-badge", level: "Advanced" },
-    { name: "MongoDB", className: "mongo-badge", level: "Intermediate" }
   ];
 
   const certifications = [

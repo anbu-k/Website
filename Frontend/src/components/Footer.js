@@ -1,8 +1,5 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import '../App.css';
 
 const Footer = () => {
