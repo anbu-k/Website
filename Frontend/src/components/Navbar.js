@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Nav, Navbar as BootstrapNavbar } from "react-bootstrap";
 import { motion } from "framer-motion";
 import "../App.css";
@@ -6,14 +6,28 @@ import "../App.css";
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const rafRef = useRef(null);
+  const lastScrollY = useRef(0);
 
-  useEffect(() => {
-    const handleScroll = () => {
+  const handleScroll = useCallback(() => {
+    // Skip if scroll position hasn't changed significantly
+    const currentScrollY = window.scrollY;
+    if (Math.abs(currentScrollY - lastScrollY.current) < 10) {
+      return;
+    }
+    lastScrollY.current = currentScrollY;
+
+    // Cancel any pending animation frame
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+
+    rafRef.current = requestAnimationFrame(() => {
       const sections = ["home", "about", "education", "projects"];
-      const scrollPosition = window.pageYOffset + 100;
+      const scrollPosition = currentScrollY + 100;
 
       // Change navbar appearance on scroll
-      setScrolled(window.pageYOffset > 50);
+      setScrolled(currentScrollY > 50);
 
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -27,12 +41,21 @@ const Navbar = () => {
           }
         }
       }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Call once on mount
-    return () => window.removeEventListener("scroll", handleScroll);
+    });
   }, []);
+
+  useEffect(() => {
+    // Use passive listener for better scroll performance
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Call once on mount
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [handleScroll]);
 
   const handleBrandClick = () => {
     smoothScrollTo(0);

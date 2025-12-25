@@ -5,6 +5,7 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import SwipeIcon from "@mui/icons-material/SwipeLeft";
 import anbuProfImage from "../images/anbuprof.JPG";
 import aquariumImage from "../images/aquar.jpeg";
 import blueImage from "../images/blue.JPG";
@@ -22,6 +23,19 @@ const About = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 1024
+  );
+
+  // Handle window resize for responsive carousel spacing
+  React.useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Keyboard navigation
   React.useEffect(() => {
@@ -52,7 +66,7 @@ const About = () => {
 
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
-    
+
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
@@ -65,42 +79,42 @@ const About = () => {
   };
 
   const images = [
-    { src: anbuProfImage},
-    { src: aquariumImage},
-    { src: blueImage},
+    { src: anbuProfImage },
+    { src: aquariumImage },
+    { src: blueImage },
     // { src: dinnerImage, alt: "Dinner" },
-    { src: fallsImage},
-    { src: ferryImage},
-    { src: minnyImage},
-    { src: spiritImage},
-    { src: yosemiteImage},
-    {src: friendsImage}
+    { src: fallsImage },
+    { src: ferryImage },
+    { src: minnyImage },
+    { src: spiritImage },
+    { src: yosemiteImage },
+    { src: friendsImage },
   ];
 
   const contactInfo = [
     {
       icon: <PhoneIphoneIcon />,
       text: "515-783-8917",
-      link: "tel:515-783-8917"
+      link: "tel:515-783-8917",
     },
     {
       icon: <MailOutlineIcon />,
       text: "anbukrishnan52@gmail.com",
-      link: "mailto:anbukrishnan52@gmail.com"
-    }
+      link: "mailto:anbukrishnan52@gmail.com",
+    },
   ];
 
   const socialLinks = [
     {
       icon: <LinkedInIcon />,
       link: "https://www.linkedin.com/in/anbu-krishnan-312789227",
-      label: "LinkedIn"
+      label: "LinkedIn",
     },
     {
       icon: <GitHubIcon />,
       link: "https://github.com/anbu-k",
-      label: "GitHub"
-    }
+      label: "GitHub",
+    },
   ];
 
   const changeImage = (direction) => {
@@ -124,20 +138,29 @@ const About = () => {
   const getCardStyle = (index) => {
     const totalImages = images.length;
     let offset = index - currentImageIndex;
-    
+
     // Wrap around for continuous carousel
     if (offset > totalImages / 2) offset -= totalImages;
     if (offset < -totalImages / 2) offset += totalImages;
-    
-    // Coverflow-style positioning
-    const spacing = 400; // Horizontal spacing between cards
+
+    // Coverflow-style positioning - responsive spacing
+    const isMobile = windowWidth <= 768;
+    const isSmallMobile = windowWidth <= 480;
+    const isVerySmall = windowWidth <= 360;
+    const spacing = isVerySmall
+      ? 180
+      : isSmallMobile
+      ? 220
+      : isMobile
+      ? 280
+      : 400;
     const translateX = offset * spacing;
-    
+
     // Rotation for 3D effect - side cards angle inward
     let rotateY = 0;
     let translateZ = 0;
     let scale = 1;
-    
+
     if (offset === 0) {
       // Center card - straight on, larger, forward
       rotateY = 0;
@@ -149,7 +172,7 @@ const About = () => {
       translateZ = -50 - Math.abs(offset) * 30;
       scale = 0.85;
     }
-    
+
     // Opacity based on distance from center
     const absOffset = Math.abs(offset);
     let opacity = 1;
@@ -157,10 +180,10 @@ const About = () => {
     else if (absOffset === 1) opacity = 0.8;
     else if (absOffset === 2) opacity = 0.5;
     else opacity = 0;
-    
+
     const zIndex = 10 - absOffset;
     const isVisible = absOffset <= 3;
-    
+
     return {
       x: translateX,
       z: translateZ,
@@ -168,146 +191,138 @@ const About = () => {
       scale: scale,
       opacity: isVisible ? opacity : 0,
       zIndex: isVisible ? Math.max(zIndex, 0) : -1,
-      pointerEvents: offset === 0 ? 'none' : isVisible ? 'auto' : 'none',
-      visibility: isVisible ? 'visible' : 'hidden'
+      pointerEvents: offset === 0 ? "none" : isVisible ? "auto" : "none",
+      visibility: isVisible ? "visible" : "hidden",
     };
   };
 
   return (
     <div className="about-section">
       <Container>
-
         {/* Main Content */}
         <Row className="justify-content-center mt-1">
           <Col xs={12}>
             {/* 3D Image Library Carousel - Full Width */}
             <div className="carousel-3d-container-wrapper">
-              <div 
+              <div
                 className="carousel-3d-container"
                 onTouchStart={onTouchStart}
                 onTouchMove={onTouchMove}
                 onTouchEnd={onTouchEnd}
               >
-                  <div className="carousel-3d-scene">
-                    {images.map((image, index) => {
-                      const cardStyle = getCardStyle(index);
-                      const offset = index - currentImageIndex;
-                      return (
-                        <motion.div
-                          key={index}
-                          className="carousel-3d-card"
-                          animate={{
-                            x: cardStyle.x,
-                            z: cardStyle.z,
-                            rotateY: cardStyle.rotateY,
-                            scale: cardStyle.scale,
-                            opacity: cardStyle.opacity
-                          }}
-                          transition={{
-                            duration: 0.7,
-                            ease: [0.4, 0.0, 0.2, 1]
-                          }}
-                          style={{
-                            zIndex: cardStyle.zIndex,
-                            pointerEvents: offset === 0 ? 'none' : 'auto',
-                            visibility: cardStyle.visibility,
-                            cursor: offset === 0 ? 'default' : 'pointer'
-                          }}
-                          onClick={() => offset !== 0 && goToImage(index)}
-                        >
-                          <div className="carousel-3d-card-inner">
-                            <img
-                              src={image.src}
-                              alt={image.alt}
-                              className="carousel-3d-image"
-                              loading="lazy"
-                            />
-                          </div>
-                        </motion.div>
-                      );
-                    })}
-                  </div>
-
-                  {/* Current Image Info */}
-                  <div className="carousel-3d-info">
-                    <motion.div
-                      key={currentImageIndex}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <span className="carousel-3d-counter">
-                        {currentImageIndex + 1} / {images.length}
-                      </span>
-                      <span className="carousel-3d-title">
-                        {images[currentImageIndex].alt}
-                      </span>
-                    </motion.div>
-                  </div>
+                <div className="carousel-3d-scene">
+                  {images.map((image, index) => {
+                    const cardStyle = getCardStyle(index);
+                    const offset = index - currentImageIndex;
+                    return (
+                      <motion.div
+                        key={index}
+                        className="carousel-3d-card"
+                        animate={{
+                          x: cardStyle.x,
+                          z: cardStyle.z,
+                          rotateY: cardStyle.rotateY,
+                          scale: cardStyle.scale,
+                          opacity: cardStyle.opacity,
+                        }}
+                        transition={{
+                          duration: 0.7,
+                          ease: [0.4, 0.0, 0.2, 1],
+                        }}
+                        style={{
+                          zIndex: cardStyle.zIndex,
+                          pointerEvents: offset === 0 ? "none" : "auto",
+                          visibility: cardStyle.visibility,
+                          cursor: offset === 0 ? "default" : "pointer",
+                        }}
+                        onClick={() => offset !== 0 && goToImage(index)}
+                      >
+                        <div className="carousel-3d-card-inner">
+                          <img
+                            src={image.src}
+                            alt={image.alt}
+                            className="carousel-3d-image"
+                            loading="lazy"
+                          />
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </div>
+              {/* Swipe hint for mobile */}
+              <div className="swipe-hint">
+                <SwipeIcon /> Swipe to browse
+              </div>
+            </div>
           </Col>
         </Row>
 
         {/* Info Panel - Separate Row */}
-        <Row className="justify-content-center mt-4">
+        <Row className="justify-content-center mt-3">
           <Col lg={10} xl={8}>
-                <Card className="about-info-card">
-                  <Card.Body className="about-info-body">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                    >
-                      <h2 className="about-name">Anbu Krishnan</h2>
-                      <p className="about-title animated-gradient-text">QA Automation Engineer at Corteva Agriscience</p>
-                      
-                      <div className="about-divider" />
+            <Card className="about-info-card">
+              <Card.Body className="about-info-body">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <h2 className="about-name">Anbu Krishnan</h2>
+                  <p className="about-title animated-gradient-text">
+                    QA Automation Engineer at Corteva Agriscience
+                  </p>
 
-                      {/* Contact Information */}
-                      <div className="about-contact-section">
-                        <h3 className="about-section-heading">Contact</h3>
-                        <div className="about-contact-list">
-                          {contactInfo.map((contact, index) => (
-                            <motion.a
-                              key={index}
-                              href={contact.link}
-                              className="about-contact-item"
-                              whileHover={{ x: 5 }}
-                              transition={{ type: "spring", stiffness: 300 }}
-                            >
-                              <span className="about-contact-icon">{contact.icon}</span>
-                              <span className="about-contact-text">{contact.text}</span>
-                            </motion.a>
-                          ))}
-                        </div>
-                      </div>
+                  <div className="about-divider" />
 
-                      <div className="about-divider" />
+                  {/* Contact Information */}
+                  <div className="about-contact-section">
+                    <h3 className="about-section-heading">Contact</h3>
+                    <div className="about-contact-list">
+                      {contactInfo.map((contact, index) => (
+                        <motion.a
+                          key={index}
+                          href={contact.link}
+                          className="about-contact-item"
+                          whileHover={{ x: 5 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
+                          <span className="about-contact-icon">
+                            {contact.icon}
+                          </span>
+                          <span className="about-contact-text">
+                            {contact.text}
+                          </span>
+                        </motion.a>
+                      ))}
+                    </div>
+                  </div>
 
-                      {/* Social Links */}
-                      <div className="about-social-section">
-                        <h3 className="about-section-heading">Connect</h3>
-                        <div className="about-social-links">
-                          {socialLinks.map((social, index) => (
-                            <motion.a
-                              key={index}
-                              href={social.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="about-social-link"
-                              whileHover={{ scale: 1.1, rotate: 5 }}
-                              whileTap={{ scale: 0.95 }}
-                              aria-label={social.label}
-                            >
-                              {social.icon}
-                            </motion.a>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                  </Card.Body>
-                </Card>
+                  <div className="about-divider" />
+
+                  {/* Social Links */}
+                  <div className="about-social-section">
+                    <h3 className="about-section-heading">Connect</h3>
+                    <div className="about-social-links">
+                      {socialLinks.map((social, index) => (
+                        <motion.a
+                          key={index}
+                          href={social.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="about-social-link"
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          whileTap={{ scale: 0.95 }}
+                          aria-label={social.label}
+                        >
+                          {social.icon}
+                        </motion.a>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </Card.Body>
+            </Card>
           </Col>
         </Row>
       </Container>

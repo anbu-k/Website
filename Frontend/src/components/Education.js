@@ -82,29 +82,29 @@ const Education = () => {
         </Card>
 
         {/* Content Cards */}
-        <Row className="g-5 mt-3 education-content-row">
+        <Row className="g-3 mt-2 education-content-row">
           <AnimatePresence mode="sync">
             {(activeSection === "all" || activeSection === "education") && (
-              <>
-                <Col md={6}>
-                  <EducationItem 
-                    title="Johnston High School" 
-                    subtitle="2016-2020"
-                    delay={0}
-                  />
-                </Col>
-                <Col md={6}>
-                  <EducationItem 
-                    title="Iowa State University" 
-                    subtitle="B.S. Computer Science, 2020-2024"
-                    delay={0.1}
-                  />
-                </Col>
-              </>
+              <Col md={6} key="edu-highschool">
+                <EducationItem 
+                  title="Johnston High School" 
+                  subtitle="2016-2020"
+                  delay={0}
+                />
+              </Col>
+            )}
+            {(activeSection === "all" || activeSection === "education") && (
+              <Col md={6} key="edu-university">
+                <EducationItem 
+                  title="Iowa State University" 
+                  subtitle="B.S. Computer Science, 2020-2024"
+                  delay={0.1}
+                />
+              </Col>
             )}
             
             {(activeSection === "all" || activeSection === "skills") && (
-              <Col xs={12}>
+              <Col xs={12} key="skills-section">
                 <EducationItem 
                   title="Technical Skills" 
                   delay={activeSection === "skills" ? 0 : 0.2}
@@ -131,7 +131,7 @@ const Education = () => {
             )}
 
             {(activeSection === "all" || activeSection === "certs") && (
-              <Col xs={12} className="d-flex justify-content-center">
+              <Col xs={12} className="d-flex justify-content-center" key="certs-section">
                 <EducationItem 
                   title="Certifications" 
                   delay={activeSection === "certs" ? 0 : 0.3}

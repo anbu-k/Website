@@ -1,6 +1,6 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/Navbar";
 import About from "./components/About";
@@ -11,9 +11,7 @@ import ScrollProgress from "./components/ScrollProgress";
 import BackToTop from "./components/BackToTop";
 import Footer from "./components/Footer";
 import LoadingScreen from "./components/LoadingScreen";
-//import Contact from "./components/Contact";
-import './App.css'
-//import { Component } from "react";
+import './App.css';
 
 const Resume = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -47,4 +45,6 @@ const Resume = () => {
   );
 };
 
-ReactDOM.render(<Resume />, document.getElementById("root"));
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(<Resume />);

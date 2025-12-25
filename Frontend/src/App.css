@@ -1,4 +1,12 @@
 /* ==================== GLOBAL STYLES ==================== */
+:root {
+  /* Safe area insets for notched devices */
+  --sat: env(safe-area-inset-top);
+  --sar: env(safe-area-inset-right);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
+}
+
 body, html {
   margin: 0;
   padding: 0;
@@ -7,100 +15,62 @@ body, html {
   background: #000;
   overscroll-behavior-y: none;
   -webkit-tap-highlight-color: rgba(0, 212, 255, 0.2);
-  /* Remove scroll-behavior: smooth for better performance */
-  /* Use JS smooth scroll instead for targeted smooth scrolling */
+  /* Prevent text size adjustment on orientation change */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Smooth scrolling with momentum on iOS */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Main Container with Animated Background */
 .main-container {
-    position: relative;
+  position: relative;
   min-height: 100vh;
+  min-height: calc(100vh - var(--sat) - var(--sab));
+  padding-top: var(--sat);
   color: white;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
-    overflow: hidden;
-  /* GPU acceleration for smoother scrolling */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  will-change: transform;
+  overflow-x: hidden;
 }
   
+/* Simplified static background - much better performance */
 .main-container::before {
   content: '';
   position: fixed;
-  top: 5px;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: 
-    radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 40% 20%, rgba(255, 0, 150, 0.1) 0%, transparent 50%);
-  animation: gradientShift 20s ease infinite;
+    radial-gradient(ellipse at 20% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(138, 43, 226, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 20%, rgba(255, 0, 150, 0.06) 0%, transparent 50%);
   z-index: 0;
   pointer-events: none;
-  /* Optimize background animation performance */
-  will-change: transform;
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
+/* Subtle grid overlay - simplified */
 .main-container::after {
   content: '';
   position: fixed;
-  top: 5px;
+  top: 0;
   left: 0;
   right: 0;
-    bottom: 0;
-  background: 
-    repeating-linear-gradient(
-      0deg,
-      rgba(0, 212, 255, 0.03) 0px,
-      transparent 1px,
-      transparent 40px,
-      rgba(0, 212, 255, 0.03) 41px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(0, 212, 255, 0.03) 0px,
-      transparent 1px,
-      transparent 40px,
-      rgba(0, 212, 255, 0.03) 41px
-    );
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 212, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.3;
-  /* GPU acceleration */
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-@keyframes gradientShift {
-  0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  33% {
-    transform: translate(30px, -50px) rotate(120deg);
-  }
-  66% {
-    transform: translate(-20px, 20px) rotate(240deg);
-  }
+  opacity: 0.5;
 }
 
 /* Ensure content is above background */
 .main-container > * {
   position: relative;
   z-index: 1;
-}
-
-/* Adjust Router container to not interfere with layout */
-.main-container > div {
-  position: relative;
-  z-index: 1;
-  /* Optimize rendering performance */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
 }
 
 /* Hide scrollbar but keep functionality */
@@ -124,7 +94,7 @@ body::-webkit-scrollbar {
 /* ==================== SCROLL PROGRESS BAR ==================== */
 .scroll-progress-container {
   position: fixed !important;
-  top: 0 !important;
+  top: var(--sat) !important;
   left: 0 !important;
   width: 100vw !important;
   height: 6px !important;
@@ -145,25 +115,23 @@ body::-webkit-scrollbar {
 }
 
 /* ==================== NAVBAR ==================== */
-  .navbar-custom {
-  background: rgba(10, 10, 10, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-    position: sticky;
-  top: 5px;
-    z-index: 1000;
-  transition: all 0.3s ease;
+.navbar-custom {
+  background: rgba(10, 10, 10, 0.92);
+  position: sticky;
+  top: max(5px, var(--sat));
+  z-index: 1000;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
   border-bottom: 1px solid rgba(0, 212, 255, 0.1);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   padding: 8px 20px;
   margin: 0 20px;
   border-radius: 12px;
 }
 
 .navbar-custom.scrolled {
-  background: rgba(10, 10, 10, 0.95);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 212, 255, 0.1);
-  border-color: rgba(0, 212, 255, 0.3);
+  background: rgba(10, 10, 10, 0.98);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 212, 255, 0.25);
 }
 
 .navbar-brand-container {
@@ -254,16 +222,27 @@ body::-webkit-scrollbar {
 .navbar-toggler-custom {
   border-color: rgba(0, 212, 255, 0.5) !important;
   color: #00d4ff !important;
+  padding: 8px 12px;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .navbar-toggler-custom:focus {
   box-shadow: 0 0 0 0.2rem rgba(0, 212, 255, 0.25);
 }
 
+/* Custom hamburger icon styling */
+.navbar-toggler-custom .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 212, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
 @media (max-width: 991px) {
   .navbar-custom {
     margin: 0 10px;
     padding: 12px 16px;
+    /* Safe area support for notched devices */
+    padding-left: max(16px, var(--sal));
+    padding-right: max(16px, var(--sar));
   }
 
   .nav-brand-custom {
@@ -273,10 +252,28 @@ body::-webkit-scrollbar {
   .navbar-nav-custom {
     gap: 5px;
     margin-top: 15px;
+    padding-bottom: 10px;
   }
 
   .nav-link-custom {
-    padding: 10px 16px !important;
+    padding: 14px 20px !important;
+    border-radius: 10px;
+    /* Active state for touch */
+    transition: all 0.15s ease;
+  }
+
+  .nav-link-custom:active {
+    background: rgba(0, 212, 255, 0.2);
+    transform: scale(0.98);
+  }
+
+  /* Collapsed menu animation */
+  .navbar-collapse {
+    background: rgba(10, 10, 10, 0.95);
+    margin: 15px -16px -12px -16px;
+    padding: 10px 16px;
+    border-radius: 0 0 12px 12px;
+    border-top: 1px solid rgba(0, 212, 255, 0.2);
   }
 }
 
@@ -457,8 +454,7 @@ body::-webkit-scrollbar {
 
 .carousel-3d-button {
   pointer-events: all;
-  background-color: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(12px);
+  background-color: rgba(20, 20, 30, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: white;
   width: 50px;
@@ -468,8 +464,8 @@ body::-webkit-scrollbar {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .carousel-3d-button:hover:not(:disabled) {
@@ -498,23 +494,15 @@ body::-webkit-scrollbar {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background-color: rgba(10, 10, 20, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 30px;
   padding: 12px 28px;
   display: flex;
   gap: 16px;
   align-items: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   z-index: 100;
-  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.carousel-3d-info:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-  border-color: rgba(0, 255, 255, 0.4);
-  box-shadow: 0 6px 30px rgba(0, 255, 255, 0.3);
 }
 
 .carousel-3d-counter {
@@ -534,18 +522,15 @@ body::-webkit-scrollbar {
 }
 
 .about-info-card {
-  background-color: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 16px;
+  transition: border-color 0.2s ease;
   height: 100%;
 }
 
 .about-info-card:hover {
-  background-color: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 212, 255, 0.3);
 }
 
 .about-info-body {
@@ -727,11 +712,8 @@ body::-webkit-scrollbar {
 
 /* ==================== UNIFIED SECTION STYLES ==================== */
 .section-container {
-  padding: 80px 20px;
+  padding: 50px 16px;
   position: relative;
-  /* Optimize scroll performance with content-visibility */
-  content-visibility: auto;
-  contain-intrinsic-size: auto 1000px;
 }
 
 .section-container::before {
@@ -740,10 +722,10 @@ body::-webkit-scrollbar {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 80%;
+  width: 60%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
-  opacity: 0.5;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.25), transparent);
+  opacity: 0.6;
 }
 
 .section-container:first-of-type::before {
@@ -751,33 +733,26 @@ body::-webkit-scrollbar {
 }
 
 .section-header-card {
-  background-color: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 14px;
   text-align: center;
-  margin-bottom: 40px;
-  padding: 24px 28px;
-  transition: all 0.3s ease;
-  /* GPU acceleration */
-  transform: translateZ(0);
-  will-change: transform;
+  margin-bottom: 24px;
+  padding: 20px 20px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .section-header-card:hover {
-  background-color: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.3);
 }
 
 .section-title {
   color: white;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
-  margin: 0 0 12px 0;
-  letter-spacing: -1px;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
   background: linear-gradient(135deg, #00d4ff, #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -786,101 +761,93 @@ body::-webkit-scrollbar {
 
 .section-description {
   color: rgba(255, 255, 255, 0.6);
-  font-size: 0.95rem;
-  margin: 8px 0 0 0;
-  font-weight: 300;
-  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+  margin: 4px 0 0 0;
+  font-weight: 400;
+  letter-spacing: 0.3px;
 }
 
 .section-subtitle {
   color: white;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   line-height: 1.4;
 }
 
 .section-text {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1rem;
-  line-height: 1.8;
-  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 4px;
 }
 
 /* ==================== EDUCATION SECTION ==================== */
 .filter-tabs {
   display: flex;
-  gap: 16px;
+  gap: 8px;
   justify-content: center;
-  margin-top: 28px;
+  margin-top: 16px;
   flex-wrap: wrap;
 }
 
 .filter-tab {
   background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 212, 255, 0.25);
   color: rgba(255, 255, 255, 0.7);
-  padding: 12px 28px;
-  border-radius: 24px;
+  padding: 8px 18px;
+  border-radius: 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
   font-weight: 500;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 .filter-tab:hover {
   background-color: rgba(0, 212, 255, 0.1);
-  border-color: rgba(0, 212, 255, 0.4);
+  border-color: rgba(0, 212, 255, 0.5);
   color: #00d4ff;
-  transform: translateY(-2px);
 }
 
 .filter-tab.active {
   background-color: rgba(0, 212, 255, 0.2);
   border-color: #00d4ff;
   color: #00d4ff;
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.25);
 }
 
 .education-content-row {
-  min-height: 600px;
+  min-height: auto;
   transition: min-height 0.3s ease;
 }
 
 .education-card {
-  background-color: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 12px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   height: 100%;
-  padding: 8px;
-  /* GPU acceleration */
-  transform: translateZ(0);
-  will-change: transform;
+  padding: 0;
 }
 
 .education-card .card-body {
-  padding: 24px;
+  padding: 20px 24px;
 }
 
 .education-card:hover {
-  background-color: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-8px);
-  box-shadow: 0 12px 32px rgba(0, 212, 255, 0.2), 0 0 40px rgba(0, 212, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(0, 212, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 212, 255, 0.12);
 }
 
 .skills-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 10px;
   justify-content: center;
-  margin-top: 24px;
-  padding: 16px 0;
+  margin-top: 16px;
+  padding: 8px 0;
 }
 
 .skill-badge-wrapper {
@@ -890,16 +857,16 @@ body::-webkit-scrollbar {
 
 .skill-badge {
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-  padding: 8px 16px;
+  transition: all 0.2s ease;
+  font-size: 0.8rem;
+  padding: 6px 14px;
   border: none;
   font-weight: 500;
 }
 
 .skill-badge:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
 }
 
 .skill-tooltip {
@@ -949,34 +916,34 @@ body::-webkit-scrollbar {
 .certs-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
   margin-top: 12px;
   justify-content: center;
 }
 
 .education-card:has(.certs-container) {
   width: 100% !important;
-  max-width: 500px !important;
+  max-width: 100% !important;
   margin: 0 auto !important;
 }
 
 .cert-card {
   position: relative;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 380px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 340px;
 }
 
 .cert-card:hover {
   background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  transform: translateY(-4px);
+  border-color: rgba(0, 212, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 212, 255, 0.15);
+  transform: translateY(-3px);
 }
 
 .cert-image {
@@ -991,49 +958,44 @@ body::-webkit-scrollbar {
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
-  padding: 16px;
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+  padding: 12px;
+  transform: translateY(0);
+  transition: background 0.3s ease;
 }
 
 .cert-card:hover .cert-overlay {
-  transform: translateY(0);
+  background: linear-gradient(to top, rgba(0, 212, 255, 0.2), transparent);
 }
 
 .cert-name {
   color: white;
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 500;
   text-align: center;
+  line-height: 1.4;
 }
 
 /* ==================== PROJECTS SECTION ==================== */
 .project-carousel {
   position: relative;
-  padding: 0 60px;
-  height: 500px;
+  padding: 0 55px;
+  height: auto;
 }
 
 .project-card {
-  background-color: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 14px;
   overflow: hidden;
-  transition: all 0.3s ease;
-  height: 500px;
-  /* GPU acceleration */
-  transform: translateZ(0);
-  will-change: transform;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  height: auto;
 }
 
 .project-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 48px rgba(0, 212, 255, 0.15), 0 0 60px rgba(0, 212, 255, 0.08);
-  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 8px 28px rgba(0, 212, 255, 0.12);
+  border-color: rgba(0, 212, 255, 0.4);
 }
 
 .project-card-hover-old {
@@ -1043,27 +1005,28 @@ body::-webkit-scrollbar {
 }
 
 .project-image-container {
-  height: 500px;
+  height: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.2);
-  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.15);
+  padding: 16px;
 }
 
 .project-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 .project-body {
-  padding: 40px;
+  padding: 28px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  height: 500px;
+  gap: 18px;
+  height: auto;
+  max-height: 400px;
   overflow-y: auto;
 }
 
@@ -1071,26 +1034,28 @@ body::-webkit-scrollbar {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 16px;
+  gap: 12px;
 }
 
 .project-title {
   color: white;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin: 0;
+  line-height: 1.3;
 }
 
 .project-subtitle {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1rem;
+  color: rgba(0, 212, 255, 0.8);
+  font-size: 0.9rem;
   margin-top: 4px;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .project-links {
   display: flex;
-  gap: 12px;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 .project-icon {
@@ -1130,15 +1095,15 @@ body::-webkit-scrollbar {
   list-style: none;
   padding: 0;
   margin: 0;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .project-description li {
-  padding: 12px 0;
-  padding-left: 28px;
+  padding: 6px 0;
+  padding-left: 22px;
   position: relative;
-  font-size: 1rem;
-  line-height: 1.8;
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 .project-description li::before {
@@ -1146,30 +1111,31 @@ body::-webkit-scrollbar {
   position: absolute;
   left: 0;
   color: #00d4ff;
-  font-size: 1.3rem;
-  top: 10px;
+  font-size: 1.1rem;
+  top: 5px;
 }
 
 .project-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
   margin-top: auto;
+  padding-top: 8px;
 }
 
 .project-tag {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: white;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 212, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  border: 1px solid rgba(0, 212, 255, 0.25);
   transition: all 0.3s ease;
 }
 
 .project-tag:hover {
-  background-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-2px);
+  background-color: rgba(0, 212, 255, 0.2);
+  border-color: rgba(0, 212, 255, 0.5);
 }
 
 /* Carousel Navigation */
@@ -1177,8 +1143,7 @@ body::-webkit-scrollbar {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  background-color: rgba(20, 20, 30, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
   width: 48px;
@@ -1188,14 +1153,13 @@ body::-webkit-scrollbar {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
   z-index: 10;
 }
 
 .carousel-button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 212, 255, 0.2);
+  border-color: rgba(0, 212, 255, 0.5);
 }
 
 .carousel-button-left {
@@ -1214,85 +1178,130 @@ body::-webkit-scrollbar {
 .project-indicators {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-top: 32px;
+  gap: 8px;
+  margin-top: 20px;
 }
 
 .indicator {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(0, 212, 255, 0.3);
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   padding: 0;
 }
 
 .indicator:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-  transform: scale(1.2);
+  background-color: rgba(0, 212, 255, 0.6);
 }
 
 .indicator.active {
-  background-color: white;
-  width: 32px;
-  border-radius: 6px;
+  background-color: #00d4ff;
+  width: 28px;
+  border-radius: 5px;
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
 }
 
 /* ==================== RESPONSIVE DESIGN ==================== */
 @media (max-width: 768px) {
   .section-container {
-    padding: 50px 20px;
+    padding: 40px 14px;
   }
 
   .section-title {
-    font-size: 2.2rem;
-    letter-spacing: -0.5px;
+    font-size: 1.6rem;
+    letter-spacing: -0.3px;
   }
 
   .section-description {
-    font-size: 0.95rem;
+    font-size: 0.8rem;
   }
 
-.section-header-card {
-    padding: 20px 18px;
-    margin-bottom: 28px;
+  .section-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .section-text {
+    font-size: 0.85rem;
+  }
+
+  .section-header-card {
+    padding: 16px 14px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+  }
+
+  .education-card {
+    border-radius: 10px;
+  }
+
+  .education-card .card-body {
+    padding: 16px 18px;
+  }
+
+  .filter-tabs {
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .filter-tab {
+    padding: 7px 14px;
+    font-size: 0.8rem;
+  }
+
+  .skills-container {
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .skill-badge {
+    padding: 5px 12px;
+    font-size: 0.75rem;
   }
 
   .project-carousel {
-    padding: 0 60px;
+    padding: 0 50px;
     touch-action: pan-y;
     user-select: none;
+    height: auto;
   }
 
   .project-card {
     height: auto;
   }
 
+  /* Stack the row items on mobile */
+  .project-card .row {
+    flex-direction: column;
+  }
+
+  .project-card .row > [class*="col-md"] {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .project-image-container {
-    height: 280px;
+    height: 220px;
+    border-radius: 12px 12px 0 0;
   }
 
   .project-body {
     padding: 24px 20px;
-    gap: 20px;
+    gap: 18px;
     height: auto;
     overflow-y: visible;
   }
-  
-  .project-carousel {
-    height: auto;
-  }
 
   .project-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
   .project-description li {
     font-size: 0.95rem;
     line-height: 1.7;
-    padding: 10px 0;
+    padding: 8px 0;
     padding-left: 24px;
   }
 
@@ -1300,10 +1309,32 @@ body::-webkit-scrollbar {
   .carousel-button {
     width: 44px;
     height: 44px;
+    transition: all 0.15s ease;
+  }
+
+  .carousel-button:active {
+    transform: translateY(-50%) scale(0.92);
+    background-color: rgba(255, 255, 255, 0.25);
   }
 
   .carousel-button svg {
-    font-size: 28px;
+    font-size: 26px;
+  }
+
+  /* Project indicators touch targets */
+  .indicator {
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+  }
+
+  .indicator.active {
+    width: 36px;
+  }
+
+  .project-indicators {
+    gap: 10px;
+    padding: 10px 0;
   }
 
   .filter-tabs {
@@ -1322,27 +1353,46 @@ body::-webkit-scrollbar {
 
   /* About Section Responsive */
   .about-section {
-    padding: 40px 20px;
+    padding: 40px 12px;
   }
 
   .carousel-3d-container {
-    height: 400px;
+    height: 380px;
     touch-action: pan-y;
     user-select: none;
+    /* Prevent horizontal overflow on mobile */
+    overflow: hidden;
+  }
+
+  .carousel-3d-scene {
+    /* Scale down the scene for mobile to prevent overflow */
+    transform: scale(0.85);
   }
 
   .carousel-3d-card {
-    width: 260px;
-    height: 340px;
+    width: 240px;
+    height: 320px;
+    margin-left: -120px;
+    margin-top: -160px;
     /* Simplify animations on mobile for better performance */
     transition: all 0.5s ease !important;
   }
 
+  .carousel-3d-controls {
+    padding: 0 5px;
+  }
 
   .carousel-3d-button {
     width: 48px;
     height: 48px;
     opacity: 0.9;
+    /* Touch feedback */
+    transition: all 0.15s ease;
+  }
+
+  .carousel-3d-button:active {
+    transform: scale(0.92);
+    background-color: rgba(0, 255, 255, 0.3);
   }
 
   .carousel-3d-button svg {
@@ -1350,13 +1400,13 @@ body::-webkit-scrollbar {
   }
 
   .carousel-3d-info {
-    padding: 12px 24px;
-    bottom: 30px;
+    padding: 10px 20px;
+    bottom: 20px;
   }
 
   .carousel-3d-counter,
   .carousel-3d-title {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .about-info-card {
@@ -1372,15 +1422,7 @@ body::-webkit-scrollbar {
   }
 
   .about-info-body {
-    padding: 28px;
-  }
-
-  .about-name {
-    font-size: 1.8rem;
-  }
-
-  .about-title {
-    font-size: 1rem;
+    padding: 24px 20px;
   }
 
   .about-contact-text {
@@ -1388,37 +1430,99 @@ body::-webkit-scrollbar {
   }
 
   .about-social-link {
-    width: 45px;
-    height: 45px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .about-social-link:active {
+    transform: scale(0.95);
+    background-color: rgba(0, 255, 255, 0.3);
   }
 
   .about-social-link svg {
     font-size: 22px;
   }
+
+  /* Contact items touch feedback */
+  .about-contact-item:active {
+    background-color: rgba(0, 255, 255, 0.15);
+    transform: scale(0.98);
+  }
 }
 
 @media (max-width: 576px) {
   .section-container {
-    padding: 40px 16px;
+    padding: 32px 12px;
   }
 
   .section-title {
-    font-size: 1.8rem;
-    letter-spacing: -0.5px;
+    font-size: 1.4rem;
+    letter-spacing: -0.3px;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
   }
 
   .section-header-card {
-    padding: 20px 16px;
-    margin-bottom: 24px;
+    padding: 14px 12px;
+    margin-bottom: 14px;
+    border-radius: 10px;
+  }
+
+  .education-card {
+    border-radius: 8px;
+  }
+
+  .education-card .card-body {
+    padding: 14px 14px;
+  }
+
+  .filter-tabs {
+    gap: 5px;
+  }
+
+  .filter-tab {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  .skills-container {
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .skill-badge {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+  }
+
+  .cert-card {
+    border-radius: 8px;
+  }
+
+  .cert-name {
+    font-size: 0.75rem;
+  }
+
+  .cert-overlay {
+    padding: 10px;
   }
 
   .project-header {
     flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .project-links {
+    width: 100%;
+    justify-content: flex-start;
     gap: 16px;
   }
 
   .project-carousel {
-    padding: 0 50px;
+    padding: 0 45px;
     height: auto;
   }
 
@@ -1427,53 +1531,87 @@ body::-webkit-scrollbar {
   }
 
   .project-image-container {
-    height: 220px;
+    height: 180px;
+    padding: 12px;
   }
 
   .project-body {
-    padding: 20px 16px;
-    gap: 16px;
+    padding: 18px 14px;
+    gap: 14px;
     height: auto;
     overflow-y: visible;
   }
 
   .project-title {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
   }
 
   .project-subtitle {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .project-description li {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     line-height: 1.6;
-    padding: 8px 0;
-    padding-left: 20px;
+    padding: 6px 0;
+    padding-left: 18px;
   }
 
   .project-description li::before {
-    font-size: 1.1rem;
-    top: 8px;
+    font-size: 1rem;
+    top: 6px;
   }
 
   .project-tag {
-    font-size: 0.8rem;
-    padding: 6px 12px;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+
+  .project-tags {
+    gap: 6px;
+  }
+
+  .project-icon {
+    padding: 8px;
+  }
+
+  .project-icon:active {
+    transform: scale(1.1);
+    color: rgba(0, 255, 255, 1);
   }
 
   .project-icon svg {
-    font-size: 24px;
+    font-size: 22px;
+  }
+
+  /* Carousel buttons smaller on very small screens */
+  .carousel-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .carousel-button svg {
+    font-size: 22px;
   }
 
   /* About Section Mobile */
+  .about-section {
+    padding: 30px 10px;
+  }
+
   .carousel-3d-container {
-    height: 360px;
+    height: 340px;
+  }
+
+  .carousel-3d-scene {
+    transform: scale(0.75);
   }
 
   .carousel-3d-card {
-    width: 220px;
-    height: 300px;
+    width: 200px;
+    height: 280px;
+    margin-left: -100px;
+    margin-top: -140px;
   }
 
   /* Ensure buttons are large enough for touch */
@@ -1483,19 +1621,20 @@ body::-webkit-scrollbar {
   }
 
   .carousel-3d-button svg {
-    font-size: 26px;
+    font-size: 24px;
   }
 
   .carousel-3d-info {
-    padding: 10px 20px;
+    padding: 8px 16px;
     flex-direction: column;
-    gap: 6px;
-    bottom: 20px;
+    gap: 4px;
+    bottom: 15px;
+    border-radius: 20px;
   }
 
   .carousel-3d-counter,
   .carousel-3d-title {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .about-info-body {
@@ -1503,28 +1642,29 @@ body::-webkit-scrollbar {
   }
 
   .about-name {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 
   .about-title {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .about-contact-item {
     padding: 12px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
     min-height: 44px;
   }
 
   .about-contact-text {
     font-size: 0.85rem;
+    word-break: break-all;
   }
 
   .about-social-link {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     font-size: 24px;
   }
 
@@ -1642,31 +1782,54 @@ body::-webkit-scrollbar {
 /* ==================== VERY SMALL SCREENS ==================== */
 @media (max-width: 360px) {
   .section-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+  }
+
+  .section-container {
+    padding: 30px 12px;
+  }
+
+  .carousel-3d-container {
+    height: 300px;
+  }
+
+  .carousel-3d-scene {
+    transform: scale(0.65);
   }
 
   .carousel-3d-card {
-    width: 200px;
-    height: 280px;
+    width: 180px;
+    height: 250px;
+    margin-left: -90px;
+    margin-top: -125px;
   }
 
   .project-carousel {
-    padding: 0 45px;
+    padding: 0 40px;
   }
 
   .carousel-button,
   .carousel-3d-button {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
   }
 
   .carousel-button svg,
   .carousel-3d-button svg {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .project-body {
-    padding: 16px 12px;
+    padding: 14px 12px;
+    gap: 12px;
+  }
+
+  .project-title {
+    font-size: 1.15rem;
+  }
+
+  .project-image-container {
+    height: 160px;
   }
 
   .filter-tab {
@@ -1675,15 +1838,58 @@ body::-webkit-scrollbar {
   }
 
   .home-title {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+  }
+
+  .home-container {
+    padding: 25px 15px;
+  }
+
+  /* Navbar adjustments */
+  .navbar-custom {
+    margin: 0 6px;
+    padding: 10px 12px;
+  }
+
+  .nav-brand-custom {
+    font-size: 1.1rem !important;
+  }
+
+  .brand-icon {
+    font-size: 1rem;
+    margin: 0 4px;
+  }
+
+  /* About info card */
+  .about-name {
     font-size: 1.3rem;
+  }
+
+  .about-title {
+    font-size: 0.85rem;
+  }
+
+  .about-section-heading {
+    font-size: 0.8rem;
+  }
+
+  /* Social links */
+  .about-social-links {
+    gap: 12px;
+  }
+
+  .about-social-link {
+    width: 44px;
+    height: 44px;
   }
 }
 
 /* ==================== BACK TO TOP BUTTON ==================== */
 .back-to-top {
   position: fixed;
-  bottom: 40px;
-  right: 40px;
+  bottom: max(40px, calc(20px + var(--sab)));
+  right: max(40px, calc(20px + var(--sar)));
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -1697,6 +1903,8 @@ body::-webkit-scrollbar {
   box-shadow: 0 8px 24px rgba(0, 212, 255, 0.4);
   z-index: 999;
   transition: all 0.3s ease;
+  /* Touch feedback */
+  -webkit-tap-highlight-color: transparent;
 }
 
 .back-to-top:hover {
@@ -1704,8 +1912,54 @@ body::-webkit-scrollbar {
   transform: translateY(-4px);
 }
 
+.back-to-top:active {
+  transform: scale(0.92);
+  box-shadow: 0 6px 20px rgba(0, 212, 255, 0.5);
+}
+
 .back-to-top svg {
   font-size: 28px;
+}
+
+/* ==================== GLOBAL TOUCH FEEDBACK ==================== */
+@media (hover: none) and (pointer: coarse) {
+  /* Touch-specific styles for mobile devices */
+  
+  /* Remove hover effects that don't work well on touch */
+  .nav-link-custom:hover {
+    transform: none;
+  }
+  
+  .filter-tab:hover {
+    transform: none;
+  }
+  
+  .project-card:hover {
+    transform: none;
+  }
+  
+  .education-card:hover {
+    transform: none;
+  }
+  
+  /* Add active states instead */
+  .filter-tab:active {
+    transform: scale(0.97);
+    background-color: rgba(0, 212, 255, 0.15);
+  }
+  
+  .skill-badge:active {
+    transform: scale(0.95);
+  }
+  
+  .cert-card:active {
+    transform: scale(0.98);
+  }
+
+  /* Disable complex animations for better performance */
+  .carousel-3d-card {
+    transition: all 0.4s ease !important;
+  }
 }
 
 /* ==================== FOOTER ==================== */
@@ -1716,6 +1970,10 @@ body::-webkit-scrollbar {
     rgba(0, 0, 0, 0.6) 100%
   );
   padding: 60px 0 30px 0;
+  /* Add safe area padding for notched devices */
+  padding-bottom: max(30px, calc(20px + var(--sab)));
+  padding-left: var(--sal);
+  padding-right: var(--sar);
   margin-top: 80px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -1979,5 +2237,62 @@ body::-webkit-scrollbar {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ==================== MOBILE SWIPE HINT ==================== */
+.swipe-hint {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  margin-top: 12px;
+  animation: swipeHintPulse 2s ease-in-out infinite;
+}
+
+.swipe-hint svg {
+  font-size: 18px;
+}
+
+@keyframes swipeHintPulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(5px);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .swipe-hint {
+    display: flex;
+  }
+}
+
+/* ==================== MOBILE-ONLY HELPER CLASSES ==================== */
+@media (max-width: 768px) {
+  /* Hide on mobile */
+  .hide-mobile {
+    display: none !important;
+  }
   
+  /* Show on mobile */
+  .show-mobile {
+    display: block !important;
+  }
+  
+  .show-mobile-flex {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 769px) {
+  /* Hide on desktop */
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
   

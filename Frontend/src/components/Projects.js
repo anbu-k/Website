@@ -6,6 +6,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import LinkIcon from "@mui/icons-material/Link";
+import SwipeIcon from "@mui/icons-material/SwipeLeft";
 import cyrateImage from "../images/cyrate3.jpg";
 import adkImage from "../images/ADKlogo.jpg";
 import menyImage from "../images/MENY.jpg";
@@ -172,7 +173,7 @@ const Projects = () => {
         </Card>
 
         {/* Project Cards */}
-        <Row className="justify-content-center mt-5">
+        <Row className="justify-content-center mt-3">
           <Col lg={10} xl={8}>
             <div 
               className="project-carousel"
@@ -299,6 +300,10 @@ const Projects = () => {
                   aria-label={`Go to project ${index + 1}`}
                 />
               ))}
+            </div>
+            {/* Swipe hint for mobile */}
+            <div className="swipe-hint">
+              <SwipeIcon /> Swipe to browse projects
             </div>
           </Col>
         </Row>
