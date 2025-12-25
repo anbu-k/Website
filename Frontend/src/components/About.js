@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
@@ -26,9 +26,30 @@ const About = () => {
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 1024
   );
+  const autoPlayRef = useRef(null);
+  const imagesLength = 9; // Total number of images
+
+  // Auto-advance carousel every 5 seconds
+  const resetAutoPlay = useCallback(() => {
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+    }
+    autoPlayRef.current = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % imagesLength);
+    }, 5000);
+  }, [imagesLength]);
+
+  useEffect(() => {
+    resetAutoPlay();
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+    };
+  }, [resetAutoPlay]);
 
   // Handle window resize for responsive carousel spacing
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
@@ -38,7 +59,7 @@ const About = () => {
   }, []);
 
   // Keyboard navigation
-  React.useEffect(() => {
+  useEffect(() => {
     const handleKeyPress = (e) => {
       if (e.key === "ArrowLeft") {
         changeImage(-1);
@@ -126,6 +147,8 @@ const About = () => {
         : (prev - 1 + images.length) % images.length
     );
     setTimeout(() => setIsAnimating(false), 700);
+    // Reset auto-play timer on manual navigation
+    resetAutoPlay();
   };
 
   const goToImage = (index) => {
@@ -133,6 +156,8 @@ const About = () => {
     setIsAnimating(true);
     setCurrentImageIndex(index);
     setTimeout(() => setIsAnimating(false), 700);
+    // Reset auto-play timer on manual navigation
+    resetAutoPlay();
   };
 
   const getCardStyle = (index) => {
@@ -145,14 +170,14 @@ const About = () => {
 
     // Coverflow-style positioning - responsive spacing
     const isMobile = windowWidth <= 768;
-    const isSmallMobile = windowWidth <= 480;
+    const isSmallMobile = windowWidth <= 576;
     const isVerySmall = windowWidth <= 360;
     const spacing = isVerySmall
-      ? 180
+      ? 140
       : isSmallMobile
-      ? 220
+      ? 160
       : isMobile
-      ? 280
+      ? 200
       : 400;
     const translateX = offset * spacing;
 
@@ -164,13 +189,13 @@ const About = () => {
     if (offset === 0) {
       // Center card - straight on, larger, forward
       rotateY = 0;
-      translateZ = 100;
+      translateZ = isMobile ? 50 : 100;
       scale = 1;
     } else {
-      // Side cards - angle toward center
-      rotateY = offset > 0 ? -55 : 55;
-      translateZ = -50 - Math.abs(offset) * 30;
-      scale = 0.85;
+      // Side cards - angle toward center (less rotation on mobile)
+      rotateY = offset > 0 ? (isMobile ? -45 : -55) : (isMobile ? 45 : 55);
+      translateZ = isMobile ? -30 - Math.abs(offset) * 20 : -50 - Math.abs(offset) * 30;
+      scale = isMobile ? 0.8 : 0.85;
     }
 
     // Opacity based on distance from center

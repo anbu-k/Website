@@ -347,7 +347,7 @@ body::-webkit-scrollbar {
 /* ==================== ABOUT SECTION ==================== */
 .about-section {
   padding: 10px 20px 40px 20px;
-  overflow-x: hidden;
+  overflow: visible;
 }
 
 /* 3D Carousel Library - Coverflow Style */
@@ -1354,28 +1354,25 @@ body::-webkit-scrollbar {
   /* About Section Responsive */
   .about-section {
     padding: 40px 12px;
+    overflow: visible;
   }
 
   .carousel-3d-container {
     height: 380px;
     touch-action: pan-y;
     user-select: none;
-    /* Prevent horizontal overflow on mobile */
-    overflow: hidden;
+    overflow: visible;
   }
 
   .carousel-3d-scene {
-    /* Scale down the scene for mobile to prevent overflow */
-    transform: scale(0.85);
+    overflow: visible;
   }
 
   .carousel-3d-card {
-    width: 240px;
-    height: 320px;
-    margin-left: -120px;
-    margin-top: -160px;
-    /* Simplify animations on mobile for better performance */
-    transition: all 0.5s ease !important;
+    width: 220px;
+    height: 300px;
+    margin-left: -110px;
+    margin-top: -150px;
   }
 
   .carousel-3d-controls {
@@ -1386,8 +1383,6 @@ body::-webkit-scrollbar {
     width: 48px;
     height: 48px;
     opacity: 0.9;
-    /* Touch feedback */
-    transition: all 0.15s ease;
   }
 
   .carousel-3d-button:active {
@@ -1401,7 +1396,7 @@ body::-webkit-scrollbar {
 
   .carousel-3d-info {
     padding: 10px 20px;
-    bottom: 20px;
+    bottom: 10px;
   }
 
   .carousel-3d-counter,
@@ -1597,21 +1592,23 @@ body::-webkit-scrollbar {
   /* About Section Mobile */
   .about-section {
     padding: 30px 10px;
+    overflow: visible;
   }
 
   .carousel-3d-container {
-    height: 340px;
+    height: 320px;
+    overflow: visible;
   }
 
   .carousel-3d-scene {
-    transform: scale(0.75);
+    overflow: visible;
   }
 
   .carousel-3d-card {
-    width: 200px;
-    height: 280px;
-    margin-left: -100px;
-    margin-top: -140px;
+    width: 180px;
+    height: 250px;
+    margin-left: -90px;
+    margin-top: -125px;
   }
 
   /* Ensure buttons are large enough for touch */
@@ -1625,16 +1622,16 @@ body::-webkit-scrollbar {
   }
 
   .carousel-3d-info {
-    padding: 8px 16px;
-    flex-direction: column;
-    gap: 4px;
-    bottom: 15px;
+    padding: 8px 14px;
+    flex-direction: row;
+    gap: 8px;
+    bottom: 5px;
     border-radius: 20px;
   }
 
   .carousel-3d-counter,
   .carousel-3d-title {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 
   .about-info-body {
@@ -1762,20 +1759,28 @@ body::-webkit-scrollbar {
 /* ==================== MOBILE LANDSCAPE ORIENTATION ==================== */
 @media (max-width: 768px) and (orientation: landscape) {
   .carousel-3d-container {
-    height: 300px;
+    height: 260px;
+    overflow: visible;
   }
 
   .carousel-3d-card {
-    width: 200px;
-    height: 280px;
+    width: 160px;
+    height: 220px;
+    margin-left: -80px;
+    margin-top: -110px;
   }
 
   .section-container {
-    padding: 40px 20px;
+    padding: 30px 20px;
   }
 
   .home-container {
-    padding: 30px 20px;
+    padding: 20px 20px;
+  }
+
+  .carousel-3d-info {
+    bottom: 5px;
+    padding: 6px 12px;
   }
 }
 
@@ -1790,18 +1795,19 @@ body::-webkit-scrollbar {
   }
 
   .carousel-3d-container {
-    height: 300px;
+    height: 280px;
+    overflow: visible;
   }
 
   .carousel-3d-scene {
-    transform: scale(0.65);
+    overflow: visible;
   }
 
   .carousel-3d-card {
-    width: 180px;
-    height: 250px;
-    margin-left: -90px;
-    margin-top: -125px;
+    width: 160px;
+    height: 220px;
+    margin-left: -80px;
+    margin-top: -110px;
   }
 
   .project-carousel {
